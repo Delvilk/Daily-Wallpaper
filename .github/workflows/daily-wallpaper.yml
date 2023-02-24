@@ -1,0 +1,19 @@
+name: Daily Wallpaper
+
+on:
+  schedule:
+    - cron: "0 0 8 * * *"
+
+jobs:
+  daily-wallpaper-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Bash Script
+        run: bash daily_wallpaper.sh
+      - name: Commit Files
+        run: |
+          git add wallpaper.txt
+          git commit -m "Add today's wallpaper"
+          git push origin ${{ github.ref }}
